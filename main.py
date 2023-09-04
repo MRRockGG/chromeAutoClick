@@ -5,7 +5,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 import win32com.client
 
-#请确保您的 Chrome WebDriver 文件在系统 PATH 指定的目录下C:\Windows\System32
+
+# 请确保您的 Chrome WebDriver 文件在系统 PATH 指定的目录下C:\Windows\System32
 
 def login(username, password):
     options = webdriver.ChromeOptions()
@@ -32,6 +33,7 @@ def login(username, password):
     time.sleep(10)
     # 等待一段时间，以便查看登录结果
     driver.implicitly_wait(10)
+
 
 # 按间距中的绿色按钮以运行脚本。
 if __name__ == '__main__':
