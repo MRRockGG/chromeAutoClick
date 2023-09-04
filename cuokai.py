@@ -1,10 +1,10 @@
 # This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-# ja
-# coding=utf-8
-# 机房运维
+#
+# # Press Shift+F10 to execute it or replace it with your code.
+# # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+#
+# # coding=utf-8
+# # 机房运维
 
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
@@ -27,7 +27,7 @@ import time
 import os, platform
 import socket
 
-chrome_options = Options()
+"""chrome_options = Options()
 chrome_options.debugger_address = "127.0.0.1:4444"
 
 speak_out = win32com.client.Dispatch('SAPI.SPVOICE')
@@ -35,16 +35,34 @@ speak_out = win32com.client.Dispatch('SAPI.SPVOICE')
 # 隐藏浏览器
 # chrome_options.add_argument("--headless")
 # driver = webdriver.Ie(executable_path="D:\Python39\Scripts\IEDriverServer.64")
-driver = webdriver.Firefox(executable_path="D:\Python39\Scripts\geckodriver", firefox_options=chrome_options)
+driver = webdriver.Firefox(executable_path="D:\Python39\Scripts\geckodriver", firefox_options=chrome_options)"""
+speak_out = win32com.client.Dispatch('SAPI.SPVOICE')
+options = webdriver.ChromeOptions()
+options.add_argument('disable-infobars')
+# 设置下载文件的默认目录
+download_directory = 'D:\\新建文件夹'
+options.add_experimental_option("prefs", {
+    "download.default_directory": download_directory,
+    "download.prompt_for_download": False,  # 不显示下载提示框
+    "download.directory_upgrade": True,
+    "safebrowsing.enabled": True
+})
+# #设置 Chrome 浏览器的位置
+# chrome_path = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
+# options.binary_location = chrome_path
+# 指定 chrome driver 的路径
+webdriver_path = r'C:\Windows\System32\chromedriver.exe'
+# 创建 Chrome WebDriver 实例，并传入设置的ChromeOptions
+driver = webdriver.Chrome(options=options)
 driver.maximize_window()
 file_name = "d:/text.png"
 
 # 打开10.134.0.186网站
 driver.get("http://10.134.0.186")
-driver.find_element_by_id("username").send_keys("admin")
-driver.find_element_by_id("upasswd").send_keys("Tzpost2019.")
-driver.find_element_by_xpath("/html/body/div/div/div/div[1]/div[2]/form/div[3]/div[1]/input").send_keys("admin")
-driver.find_element_by_xpath("/html/body/div/div/div/div[1]/div[2]/form/div[4]/div/button[1]").click()
+driver.find_element(By.ID, "username").send_keys("admin")
+driver.find_element(By.ID, "upasswd").send_keys("Tzpost2019.")
+driver.find_element(By.XPATH, "/html/body/div/div/div/div[1]/div[2]/form/div[3]/div[1]/input").send_keys("admin")
+driver.find_element(By.XPATH, "/html/body/div/div/div/div[1]/div[2]/form/div[4]/div/button[1]").click()
 handle1 = driver.current_window_handle  # handle1是网络监控标签页
 sleep(30)
 
@@ -59,15 +77,17 @@ for handle2 in handles:
     # 筛选新打开的窗口B
     if handle2 != handle1:
         # 切换到新打开的窗口B
-        driver.switch_to_window(handle2)  # handle2是运维网
+        driver.switch_to.window(handle2)  # handle2是运维网
 
 sleep(5)
 print(driver.title)
-driver.find_element_by_xpath(
-    "/html/body/form/table/tbody/tr[3]/td[2]/div[2]/div[1]/div[1]/ul/li[1]/span[2]/input").send_keys("tz_ser")
-driver.find_element_by_xpath(
-    "/html/body/form/table/tbody/tr[3]/td[2]/div[2]/div[1]/div[1]/ul/li[2]/span[2]/input").send_keys("js_tz_ser")
-driver.find_element_by_id("btn").click()
+driver.find_element(By.XPATH,
+                    "/html/body/form/table/tbody/tr[3]/td[2]/div[2]/div[1]/div[1]/ul/li[1]/span[2]/input").send_keys(
+    "tz_ser")
+driver.find_element(By.XPATH,
+                    "/html/body/form/table/tbody/tr[3]/td[2]/div[2]/div[1]/div[1]/ul/li[2]/span[2]/input").send_keys(
+    "js_tz_ser")
+driver.find_element(By.ID, "btn").click()
 sleep(5)
 handle3 = handles[0]
 
@@ -81,7 +101,7 @@ def speak(str):
 
 def yw():
     # 切换窗口
-    driver.switch_to_window(handle2)  # handle2 is yunwei shou ye mian
+    driver.switch_to.window(handle2)  # handle2 is yunwei shou ye mian
 
     # 打开待办事项页面
     driver.get("http://10.4.228.177/wf/monitor/ProcesssummaryTodo.do?ispool=1&isindex=1")
@@ -93,21 +113,22 @@ def yw():
         driver.get("http://10.4.228.177")
         # driver.get("http://10.134.100.100:9001")
         sleep(5)
-        driver.find_element_by_xpath(
-            "/html/body/form/table/tbody/tr[3]/td[2]/div[2]/div[1]/div[1]/ul/li[1]/span[2]/input").send_keys("tz_ser")
-        driver.find_element_by_xpath(
-            "/html/body/form/table/tbody/tr[3]/td[2]/div[2]/div[1]/div[1]/ul/li[2]/span[2]/input").send_keys(
+        driver.find_element(By.XPATH,
+                            "/html/body/form/table/tbody/tr[3]/td[2]/div[2]/div[1]/div[1]/ul/li[1]/span[2]/input").send_keys(
+            "tz_ser")
+        driver.find_element(By.XPATH,
+                            "/html/body/form/table/tbody/tr[3]/td[2]/div[2]/div[1]/div[1]/ul/li[2]/span[2]/input").send_keys(
             "js_tz_ser")
-        driver.find_element_by_id("btn").click()
+        driver.find_element(By.ID, "btn").click()
         sleep(5)
         driver.get("http://10.4.228.177/wf/monitor/ProcesssummaryTodo.do?ispool=1&isindex=1")
         # driver.get("http://10.134.100.100:9001/wf/monitor/ProcesssummaryTodo.do?ispool=1&isindex=1")
         sleep(5)
 
     Wait(driver, 60).until(EC.presence_of_element_located((By.ID, "listtable")))
-    # logo6=driver.find_element_by_xpath("/html/body/form/div/div/div/table/tbody/tr[2]/td[3]/a")
-    t_table1 = driver.find_element_by_xpath(".//*[@id='listtable']")
-    rows1 = t_table1.find_elements_by_tag_name('tr')
+    # logo6=driver.find_element(By.XPATH,"/html/body/form/div/div/div/table/tbody/tr[2]/td[3]/a")
+    t_table1 = driver.find_element(By.XPATH, ".//*[@id='listtable']")
+    rows1 = t_table1.find_elements(By.TAG_NAME, 'tr')
     if len(rows1) > 1:
         # voice = pyttsx3.init()
         # voice.say('有新的调度令，需要接收')
@@ -134,7 +155,7 @@ def yw1():
     time2 = datetime.datetime.now()
     # 切换窗口
 
-    driver.switch_to_window(handle2)
+    driver.switch_to.window(handle2)
 
     # 打开运维页面
     driver.get("http://10.4.228.177/wf/monitor/Processsummary.do?isindex=1#")
@@ -146,21 +167,23 @@ def yw1():
         # driver.get("http://10.134.100.100:9001")
         driver.get("http://10.4.228.177")
         sleep(5)
-        driver.find_element_by_xpath(
-            "/html/body/form/table/tbody/tr[3]/td[2]/div[2]/div[1]/div[1]/ul/li[1]/span[2]/input").send_keys("tz_ser")
-        driver.find_element_by_xpath(
-            "/html/body/form/table/tbody/tr[3]/td[2]/div[2]/div[1]/div[1]/ul/li[2]/span[2]/input").send_keys(
+        driver.find_element(By.XPATH,
+                            "/html/body/form/table/tbody/tr[3]/td[2]/div[2]/div[1]/div[1]/ul/li[1]/span[2]/input").send_keys(
+            "tz_ser")
+        driver.find_element(By.XPATH,
+                            "/html/body/form/table/tbody/tr[3]/td[2]/div[2]/div[1]/div[1]/ul/li[2]/span[2]/input").send_keys(
             "js_tz_ser")
-        driver.find_element_by_id("btn").click()
+        driver.find_element(By.ID, "btn").click()
         sleep(5)
 
-    driver.switch_to_frame(driver.find_element_by_name("_ddajaxtabsiframe-countrydivcontainer"))
+    driver.switch_to.frame(driver.find_element(By.NAME, "_ddajaxtabsiframe-countrydivcontainer"))
+    # driver.switch_to_frame(driver.find_element(By.NAME,"_ddajaxtabsiframe-countrydivcontainer"))
 
-    listtable = driver.find_element_by_id("listtable")
+    listtable = driver.find_element(By.ID, "listtable")
     Wait(driver, 60).until(EC.presence_of_element_located((By.ID, "listtable")))
 
-    t_table11 = driver.find_element_by_xpath(".//*[@id='listtable']")
-    trs = t_table11.find_elements_by_tag_name("tr")
+    t_table11 = driver.find_element(By.XPATH, ".//*[@id='listtable']")
+    trs = t_table11.find_elements(By.TAG_NAME, "tr")
     len1 = len(trs)
     first_tr_i = 2
     end_tr_i = len1 + 1  # 如果新增了行数，或者减少了行数，那么会怎么样
@@ -169,34 +192,34 @@ def yw1():
 
         xPath = "/html/body/form/div/div/div/table/tbody/tr[" + i.__str__() + "]/td[3]/a"
 
-        print("单号", driver.find_element_by_xpath(xPath).text)
+        print("单号", driver.find_element(By.XPATH, xPath).text)
 
-        text111 = driver.find_element_by_xpath(xPath).text.__str__().find("JS-2023-")
+        text111 = driver.find_element(By.XPATH, xPath).text.__str__().find("JS-2023-")
 
         if text111 == 0 and time2.hour in {8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18}:
             # ru guo shi de
             # jin ru
-            driver.find_element_by_xpath(xPath).click()
+            driver.find_element(By.XPATH, xPath).click()
             sleep(1)
             # da ying wang zhi
             url = driver.current_url
             # print(url)
 
             handles = driver.window_handles
-            driver.switch_to_window(handles[-1])
+            driver.switch_to.window(handles[-1])
 
             title_d = driver.title
             # print(title_d)
             Wait(driver, 60).until(EC.presence_of_element_located(
                 (By.XPATH, "/html/body/form/div[3]/div[3]/table[1]/tbody/tr[10]/td[2]/input")))
-            diao_du_name_e = driver.find_element_by_xpath(
-                '/html/body/form/div[3]/div[3]/table[1]/tbody/tr[1]/td[2]/input')
+            diao_du_name_e = driver.find_element(By.XPATH,
+                                                 '/html/body/form/div[3]/div[3]/table[1]/tbody/tr[1]/td[2]/input')
             diao_du_name = diao_du_name_e.get_attribute("value")
 
             Wait(driver, 60).until(EC.presence_of_element_located(
                 (By.XPATH, '/html/body/form/div[3]/div[3]/table[1]/tbody/tr[10]/td[2]/input')))
-            endtime_e = driver.find_element_by_xpath(
-                '/html/body/form/div[3]/div[3]/table[1]/tbody/tr[10]/td[2]/input')  # 需要添加元素等待
+            endtime_e = driver.find_element(By.XPATH,
+                                            '/html/body/form/div[3]/div[3]/table[1]/tbody/tr[10]/td[2]/input')  # 需要添加元素等待
 
             endtime = endtime_e.get_attribute("value")
 
@@ -229,36 +252,37 @@ def yw1():
             print("end")
 
             handles = driver.window_handles
-            driver.switch_to_window(handles[1])
+            driver.switch_to.window(handles[1])
 
-            driver.switch_to_frame(driver.find_element_by_name("_ddajaxtabsiframe-countrydivcontainer"))
+            driver.switch_to.frame(driver.find_element(By.NAME, "_ddajaxtabsiframe-countrydivcontainer"))
 
             sleep(2)
     # driver.get("http://10.4.228.177/wf/monitor/Processsummary.do?isindex=1")
 
+
     handles = driver.window_handles
-    driver.switch_to_window(handles[1])
+    driver.switch_to.window(handles[1])
 
 
 def sblist():
     time1 = datetime.datetime.now()
     # 打开10.134.0.186网站的设备列表
-    driver.switch_to_window(handle3)
+    driver.switch_to.window(handle3)
     driver.get("http://10.134.0.186/index.php/Homes/Index.html")
     Wait(driver, 60).until(EC.presence_of_element_located((By.ID, "navbar")))
-    driver.find_element_by_name("listOper").click()
+    driver.find_element(By.NAME, "listOper").click()
     sleep(10)
-    t_table = driver.find_element_by_xpath(".//*[@id='device-list']/table")
-    rows = t_table.find_elements_by_tag_name('tr')
+    t_table = driver.find_element(By.XPATH, ".//*[@id='device-list']/table")
+    rows = t_table.find_elements(By.TAG_NAME, 'tr')
     # print(len(rows))
     row1 = 1
     while row1 <= len(rows) - 1:
 
-        t_name = driver.find_element_by_xpath(".//*[@id='device-list']/table/tbody/tr[" + str(row1) + "]/td[1]").text
-        t_zt = driver.find_element_by_xpath(".//*[@id='device-list']/table/tbody/tr[" + str(row1) + "]/td[2]").text
-        t_ip = driver.find_element_by_xpath(".//*[@id='device-list']/table/tbody/tr[" + str(row1) + "]/td[3]").text
-        # t_zl = driver.find_element_by_xpath(".//*[@id='device-list']/table/tbody/tr["+str(row1)+"]/td[4]").text
-        # t_pp = driver.find_element_by_xpath(".//*[@id='device-list']/table/tbody/tr["+str(row1)+"]/td[5]").text
+        t_name = driver.find_element(By.XPATH, ".//*[@id='device-list']/table/tbody/tr[" + str(row1) + "]/td[1]").text
+        t_zt = driver.find_element(By.XPATH, ".//*[@id='device-list']/table/tbody/tr[" + str(row1) + "]/td[2]").text
+        t_ip = driver.find_element(By.XPATH, ".//*[@id='device-list']/table/tbody/tr[" + str(row1) + "]/td[3]").text
+        # t_zl = driver.find_element(By.XPATH,".//*[@id='device-list']/table/tbody/tr["+str(row1)+"]/td[4]").text
+        # t_pp = driver.find_element(By.XPATH,".//*[@id='device-list']/table/tbody/tr["+str(row1)+"]/td[5]").text
         print(row1)
         print(t_name + "   " + t_zt + "   " + t_ip)
 
@@ -298,16 +322,16 @@ def sblist():
             speak(t_name + '  告警网点线路中断，请核实')
             sleep(2)
 
-            filename = time.strftime("%Y%m%d%H%M%S", time.localtime())
-            file = "d:/YW/" + filename + ".txt"
-            fp = open(file, "w")
-            fp.write(t_name + ' ' + t_ip + '  网点线路中断，请核实' + "\n")
-            fp.close()
+            # filename = time.strftime("%Y%m%d%H%M%S", time.localtime())
+            # file = "d:/YW/" + filename + ".txt"
+            # fp = open(file, "w")
+            # fp.write(t_name + ' '+t_ip+'  网点线路中断，请核实' + "\n")
+            # fp.close()
 
         if t_zt.__contains__("正常"):
             row1 = len(rows)
         else:
-            # 发现故障，判断是否为重要服务器
+            #发现故障，判断是否为重要服务器
             if t_ip.__contains__("10.134.0.12") or t_ip.__contains__("10.134.27.110") or t_ip.__contains__(
                     "10.134.27.111") or t_ip.__contains__("10.134.27.112") or t_ip.__contains__(
                 "10.134.27.113") or t_ip.__contains__("10.134.27.114") or t_ip.__contains__(
@@ -382,9 +406,8 @@ class MyClinet:
             print("连接失败")
             return False
         finally:
-            # 关闭连接
+            #关闭连接
             s.close()
-
 
 if __name__ == "__main__":
 
@@ -403,5 +426,5 @@ if __name__ == "__main__":
 
             yw1()
         if now.hour in {9, 10, 11, 12, 13, 14, 15, 16, 17} and now.minute in {0}:
-            # speak('现在是'+now.hour.__str__()+'时')
+            #speak('现在是'+now.hour.__str__()+'时')
             speak('整点报时')
